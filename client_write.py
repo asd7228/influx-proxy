@@ -17,17 +17,15 @@ BASEURL = 'http://localhost:6666'
 def once():
     s = '''cpu,host=server01,region=uswest value=1 1434055562000000000
 cpu value=3,value2=4 1434055562000010000
-temperature,machine=unit42,type=assembly internal=32,external=100 1434055562000000035
-temperature,machine=unit143,type=assembly internal=22,external=130 1434055562005000035'''
+temperature,machine=unit42,type=assembly internal=35,external=100 1434055562000000035
+temperature,machine=unit143,type=assembly internal=23,external=130 1434055562005000035'''
     resp = requests.post(
-        BASEURL+'/write', params={'db': 'test'}, data=s)
+        BASEURL+'/write', params={'db': 'gt_parameter_value'}, data=s)
     print(resp.status_code)
 
 
 def main():
-    while True:
-        once()
-        time.sleep(0.1)
+    once()
 
 
 if __name__ == '__main__':

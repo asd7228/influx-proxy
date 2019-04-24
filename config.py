@@ -26,8 +26,8 @@ import redis
 # writeonly: default 0
 BACKENDS = {
     'local': {
-        'url': 'http://localhost:8086', 
-        'db': 'test', 
+        'url': 'http://influxdata1:8086', 
+        'db': 'gt_parameter_value', 
         'zone':'local', 
         'interval': 1000,
         'timeout': 10000, 
@@ -37,8 +37,8 @@ BACKENDS = {
         'rewriteinterval':10000,
     },
     'local2': {
-        'url': 'http://influxdb-test:8086',
-        'db': 'test2',
+        'url': 'http://influxdata2:8086',
+        'db': 'gt_parameter_value',
         'interval': 200,
     },
 }
@@ -46,9 +46,7 @@ BACKENDS = {
 # measurement:[backends keys], the key must be in the BACKENDS
 # data with the measurement will write to the backends
 KEYMAPS = {
-    'cpu': ['local'],
-    'temperature': ['local2'],
-    '_default_': ['local']
+    '_default_': ['local','local2']
 }
 
 # this config will cover default_node config
@@ -63,12 +61,12 @@ KEYMAPS = {
 NODES = {
     'l1': { 
         'listenaddr': ':6666',
-        'db': 'test',
+        'db': 'gt_parameter_value',
         'zone': 'local',
         'interval':10,
         'idletimeout':10,
-        'writetracing':0,
-        'querytracing':0,
+        'writetracing':1,
+        'querytracing':1,
     }
 }
 

@@ -6,8 +6,7 @@
 @copyright: 2017, Eleme <zhixiang.xu@ele.me>
 @license: MIT
 '''
-from __future__ import absolute_import, division,\
-    print_function, unicode_literals
+from __future__ import absolute_import, division,print_function, unicode_literals
 import sys
 import requests
 
@@ -15,15 +14,17 @@ BASEURL = 'http://localhost:6666'
 
 
 def query(q, print_result=False):
-    resp = requests.post(BASEURL+'/query', params={'db': 'test', 'q': q})
+    resp = requests.post(BASEURL+'/query', 
+        params={'db': 'gt_parameter_value', 'q': q})
     return resp.status_code, resp.content
 
 
 def main():
     if len(sys.argv) == 1:
-        assert query('select * from cpu')[0] == 400
-        assert query('select value from cpu')[0] == 400
-        assert query('select value from cpu where time < now()')[0] == 200
+        # assert query('select * from cpu')[0] == 400
+        # assert query('select value from cpu')[0] == 400
+        # assert query('select value from cpu where time < now()')[0] == 200
+        print(query('select internal from temperature where time < now()'))
     else:
         print(query(sys.argv[1])[1])
 
