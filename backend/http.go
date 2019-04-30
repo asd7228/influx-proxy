@@ -93,6 +93,10 @@ func (hb *HttpBackend) IsActive() bool {
 	return hb.Active
 }
 
+func (hb *HttpBackend) GetUrl() string {
+	return hb.URL
+}
+
 func (hb *HttpBackend) Ping() (version string, err error) {
 	resp, err := hb.client.Get(hb.URL + "/ping")
 	if err != nil {

@@ -24,7 +24,7 @@ def main():
         # assert query('select * from cpu')[0] == 400
         # assert query('select value from cpu')[0] == 400
         # assert query('select value from cpu where time < now()')[0] == 200
-        print(query('select internal from temperature where time < now()'))
+        print(query('select max(internal) as internal from temperature where time < now() group by internal'))
     else:
         print(query(sys.argv[1])[1])
 

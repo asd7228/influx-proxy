@@ -256,3 +256,7 @@ func (bs *Backends) Rewrite() (err error) {
 	}
 	return
 }
+
+func (bs *Backends) getHttpBackEnd() (hbe *HttpBackend) {
+	return bs.HttpBackend
+}

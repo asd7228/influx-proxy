@@ -5,6 +5,7 @@
 package main
 
 import (
+	"fmt"
 	"compress/gzip"
 	"io/ioutil"
 	"log"
@@ -39,6 +40,28 @@ func (hs *HttpService) Register(mux *http.ServeMux) {
 	mux.HandleFunc("/write", hs.HandlerWrite)
 	mux.HandleFunc("/debug/pprof/", pprof.Index)
 	mux.HandleFunc("/debug/pprof/profile", pprof.Profile)
+	mux.HandleFunc("/status",hs.HandleStatus)
+}
+
+func (hs *HttpService) HandleStatus(w http.ResponseWriter, req *http.Request) {
+	defer req.Body.Close()
+	fmt.Println(hs.ic)
+	bas := hs.ic.GetBas()
+	fmt.Println(bas)
+	var ret = "["
+	for i,x:=range bas {
+		var active="0"
+		if x.IsActive() {
+			active = "1"
+		}
+		ret += "{\"id\":"+string(i)+",\"url\":\""+x.GetUrl()+"\",\"active\":"+active+"},"
+	}
+	ret = strings.Trim(ret,",")
+	ret += "]"
+	fmt.Println(ret)
+	w.WriteHeader(200)
+	w.Write([] byte(ret))
+	return
 }
 
 func (hs *HttpService) HandlerReload(w http.ResponseWriter, req *http.Request) {

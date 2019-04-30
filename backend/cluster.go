@@ -306,8 +306,8 @@ func (ic *InfluxCluster) LoadConfig() (err error) {
 	ic.lock.Lock()
 	orig_backends := ic.backends
 	ic.backends = backends
-	ic.bas = bas
-	ic.m2bs = m2bs
+	ic.bas      = bas
+	ic.m2bs     = m2bs
 	ic.lock.Unlock()
 
 	for name, bs := range orig_backends {
@@ -322,6 +322,11 @@ func (ic *InfluxCluster) LoadConfig() (err error) {
 func (ic *InfluxCluster) Ping() (version string, err error) {
 	atomic.AddInt64(&ic.stats.PingRequests, 1)
 	version = VERSION
+	return
+}
+
+func (ic *InfluxCluster) GetBas() (bas map[string]BackendAPI) {
+	bas = ic.backends
 	return
 }
 
